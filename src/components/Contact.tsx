@@ -1,23 +1,26 @@
 import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-
-const CONTACT_ITEMS = [
-  { icon: Mail, label: "Email", value: "hello@syllabletech.com", href: "mailto:hello@syllabletech.com" },
-  { icon: Phone, label: "Phone", value: "+237 6XX XXX XXX", href: "tel:+2376XXXXXXXX" },
-  { icon: MessageCircle, label: "WhatsApp", value: "+237 6XX XXX XXX", href: "#" },
-  { icon: MapPin, label: "Location", value: "Cameroon", href: undefined },
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Contact() {
+  const { t } = useLanguage();
+
+  const CONTACT_ITEMS = [
+    { icon: Mail, label: t.contact.email, value: "hello@syllabletech.com", href: "mailto:hello@syllabletech.com" },
+    { icon: Phone, label: t.contact.phone, value: "+237 6XX XXX XXX", href: "tel:+2376XXXXXXXX" },
+    { icon: MessageCircle, label: t.contact.whatsapp, value: "+237 6XX XXX XXX", href: "#" },
+    { icon: MapPin, label: t.contact.location, value: t.contact.locationValue, href: undefined },
+  ];
+
   return (
     <section id="contact" className="bg-[var(--color-surface)] py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="max-w-lg">
           <h2 className="font-display text-[32px] font-semibold leading-tight tracking-tight sm:text-[38px]">
-            Get in touch
+            {t.contact.heading}
           </h2>
           <p className="mt-4 text-[16px] leading-relaxed text-[var(--color-muted)]">
-            Reach us directly — we read every message ourselves.
+            {t.contact.subtitle}
           </p>
         </div>
 

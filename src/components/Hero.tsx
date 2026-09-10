@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 
 // Bar heights (%) forming a syllable-waveform — the one bold, deliberate
 // visual moment on the page, tied directly to the company name.
 const BARS = [28, 52, 38, 74, 46, 100, 60, 84, 34, 66, 42, 56];
 
 export default function Hero() {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
       <div className="dot-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,black,transparent)] opacity-60" />
@@ -17,15 +19,13 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h1 className="font-display text-[42px] font-semibold leading-[1.08] tracking-tight text-[var(--color-ink)] sm:text-[54px] lg:text-[60px]">
-            Build. Innovate.
+            {t.hero.titleLine1}
             <br />
-            Scale.
+            {t.hero.titleLine2}
           </h1>
 
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-[var(--color-muted)]">
-            Syllable Tech is a team of developers, designers and technology
-            enthusiasts building modern digital solutions for businesses and
-            organizations.
+            {t.hero.subtitle}
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
@@ -33,14 +33,14 @@ export default function Hero() {
               href="#team"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] px-6 py-3.5 text-[15px] font-medium text-white transition-colors hover:bg-[var(--color-accent)]"
             >
-              Explore Our Team
+              {t.hero.ctaTeam}
               <ArrowRight size={16} />
             </a>
             <a
               href="#projects"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--color-line)] px-6 py-3.5 text-[15px] font-medium text-[var(--color-ink)] transition-colors hover:border-[var(--color-ink)]"
             >
-              View Our Work
+              {t.hero.ctaWork}
             </a>
           </div>
         </motion.div>

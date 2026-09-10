@@ -1,0 +1,44 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { translations, type Lang, type TranslationShape } from "./translations";
+
+interface LanguageContextValue {
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+  t: TranslationShape;
+}
+
+const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
+
+const STORAGE_KEY = "syllable-tech-lang";
+
+function getInitialLang(): Lang {
+  if (typeof window === "undefined") return "en";
+  const saved = window.localStorage.getItem(STORAGE_KEY);
+  if (saved === "en" || saved === "fr") return saved;
+  return window.navigator.language.toLowerCase().startsWith("fr") ? "fr" : "en";
+}
+
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [lang, setLangState] = useState<Lang>(getInitialLang);
+
+  const setLang = (next: Lang) => {
+    setLangState(next);
+    window.localStorage.setItem(STORAGE_KEY, next);
+  };
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  return (
+    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+export function useLanguage() {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLanguage must be used within a LanguageProvider");
+  return ctx;
+}

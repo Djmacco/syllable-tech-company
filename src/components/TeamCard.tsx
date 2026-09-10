@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import ImageSlot from "./ImageSlot";
 import type { TeamMember } from "../data/team";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function TeamCard({ member, index }: { member: TeamMember; index: number }) {
+  const { lang } = useLanguage();
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -12,12 +14,12 @@ export default function TeamCard({ member, index }: { member: TeamMember; index:
       transition={{ duration: 0.45, delay: (index % 3) * 0.06, ease: "easeOut" }}
       className="group rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--color-accent)] hover:shadow-[0_16px_32px_-20px_rgba(20,23,31,0.25)]"
     >
-      <ImageSlot src={member.image} alt={`Portrait of ${member.name}, ${member.role}`} aspect="aspect-[4/5]" />
+      <ImageSlot src={member.image} alt={`Portrait of ${member.name}, ${member.role[lang]}`} aspect="aspect-[4/5]" />
 
       <div className="pt-4">
         <h3 className="font-display text-[17px] font-semibold">{member.name}</h3>
-        <p className="text-[13.5px] text-[var(--color-accent)]">{member.role}</p>
-        <p className="mt-2.5 text-[13.5px] leading-relaxed text-[var(--color-muted)]">{member.description}</p>
+        <p className="text-[13.5px] text-[var(--color-accent)]">{member.role[lang]}</p>
+        <p className="mt-2.5 text-[13.5px] leading-relaxed text-[var(--color-muted)]">{member.description[lang]}</p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {member.stack.map((tech) => (

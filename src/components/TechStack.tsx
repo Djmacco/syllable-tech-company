@@ -1,30 +1,31 @@
 import { motion } from "framer-motion";
 import { technologies } from "../data/technologies";
 import { techIcons } from "../data/techIcons";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function TechStack() {
+  const { lang, t } = useLanguage();
   return (
     <section className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
       <div className="max-w-lg">
         <h2 className="font-display text-[32px] font-semibold leading-tight tracking-tight sm:text-[38px]">
-          What we build with
+          {t.techStack.heading}
         </h2>
         <p className="mt-4 text-[16px] leading-relaxed text-[var(--color-muted)]">
-          A stack chosen for reliability first — tools we trust to still be
-          running smoothly a year after launch.
+          {t.techStack.subtitle}
         </p>
       </div>
 
       <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {technologies.map((group, i) => (
           <motion.div
-            key={group.category}
+            key={group.category.en}
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.45, delay: (i % 3) * 0.06, ease: "easeOut" }}
           >
-            <h3 className="text-[13.5px] font-medium text-[var(--color-muted)]">{group.category}</h3>
+            <h3 className="text-[13.5px] font-medium text-[var(--color-muted)]">{group.category[lang]}</h3>
             <div className="mt-3.5 flex flex-wrap gap-2">
               {group.items.map((item) => {
                 const Icon = techIcons[item];

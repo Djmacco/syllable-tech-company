@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-
-const STATS = [
-  { value: 10, suffix: "+", label: "Team members" },
-  { value: 20, suffix: "+", label: "Projects shipped" },
-  { value: 15, suffix: "+", label: "Technologies" },
-  { value: 100, suffix: "%", label: "Passion for technology" },
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 function Counter({ target, suffix }: { target: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -38,6 +32,13 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export default function Stats() {
+  const { t } = useLanguage();
+  const STATS = [
+    { value: 10, suffix: "+", label: t.stats.members },
+    { value: 20, suffix: "+", label: t.stats.shipped },
+    { value: 15, suffix: "+", label: t.stats.technologies },
+    { value: 100, suffix: "%", label: t.stats.passion },
+  ];
   return (
     <section className="bg-[var(--color-surface)] py-20">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 lg:grid-cols-4 lg:px-8">

@@ -1,12 +1,14 @@
 import { projects } from "../data/projects";
 import ProjectCard from "./ProjectCard";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Projects() {
+  const { t } = useLanguage();
   return (
     <section id="projects" className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-32">
       <div className="max-w-lg">
         <h2 className="font-display text-[32px] font-semibold leading-tight tracking-tight sm:text-[38px]">
-          Selected work
+          {t.projects.heading}
         </h2>
       </div>
 

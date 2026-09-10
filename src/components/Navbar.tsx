@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
-
-const LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Team", href: "#team" },
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Navbar() {
+  const { lang, setLang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const LINKS = [
+    { label: t.nav.home, href: "#home" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.team, href: "#team" },
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.projects, href: "#projects" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -51,22 +53,28 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-full bg-[var(--color-ink)] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[var(--color-accent)] md:inline-block"
-        >
-          Let's Talk
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <LangSwitch lang={lang} setLang={setLang} />
+          <a
+            href="#contact"
+            className="rounded-full bg-[var(--color-ink)] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:bg-[var(--color-accent)]"
+          >
+            {t.nav.talk}
+          </a>
+        </div>
 
-        <button
-          type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-line)] md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LangSwitch lang={lang} setLang={setLang} compact />
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-line)]"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </nav>
 
       <div
@@ -93,12 +101,46 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="block rounded-full bg-[var(--color-ink)] px-4 py-3 text-center text-[15px] font-medium text-white"
               >
-                Let's Talk
+                {t.nav.talk}
               </a>
             </li>
           </ul>
         </div>
       </div>
     </header>
+  );
+}
+
+function LangSwitch({
+  lang,
+  setLang,
+  compact = false,
+}: {
+  lang: "en" | "fr";
+  setLang: (l: "en" | "fr") => void;
+  compact?: boolean;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className={`inline-flex items-center rounded-full border border-[var(--color-line)] p-0.5 text-[12.5px] font-medium ${compact ? "" : ""}`}
+    >
+      {(["en", "fr"] as const).map((code) => (
+        <button
+          key={code}
+          type="button"
+          onClick={() => setLang(code)}
+          aria-pressed={lang === code}
+          className={`rounded-full px-2.5 py-1 uppercase transition-colors ${
+            lang === code
+              ? "bg-[var(--color-ink)] text-white"
+              : "text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+          }`}
+        >
+          {code}
+        </button>
+      ))}
+    </div>
   );
 }

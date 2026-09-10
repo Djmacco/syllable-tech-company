@@ -47,7 +47,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Zenaba Sheila Floriane",
-    role: { en: "Co-Founder & Operations & Digital Marketing", fr: "Cofondatrice & Opérations & Marketing Digital" },
+    role: { en: "Co-Founder & Technology Operations Assistant & Digital Marketing", fr: "Cofondatrice & Assistante Opérations Technologiques & Marketing Digital" },
     image: "/images/team-4.jpg",
     description: {
       en: "Keeps the business side of building tech running smoothly — from day-to-day operations to getting the work in front of the right people. Also codes on the web side when a project needs an extra pair of hands.",
